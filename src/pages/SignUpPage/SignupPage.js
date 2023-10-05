@@ -41,13 +41,17 @@ const SignUpPage = () => {
 
     // Função de simulação de cadastro de usuário
     const simulateSignUp = () => {
-        // Simular um objeto de resposta com um token
-        const simulatedResponse = { data: { token: 'admin-on' } };
+        // Simule um objeto de resposta com um username
+        const simulatedResponse = { username: form.username };
+            
+        // Armazene o username no localStorage
+        localStorage.setItem('username', simulatedResponse.username);
 
-        localStorage.setItem('token', simulatedResponse.data.token);
-        setIsLoggedIn(true);
-        setIsLoading(false);
+        // Navegar para a página inicial após o cadastro
         goToHomePage(navigate);
+
+        setIsLoading(false);
+        setIsLoggedIn(true);
     };
 
     const signUp = async (e) => {
