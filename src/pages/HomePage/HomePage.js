@@ -1,23 +1,30 @@
 import { useContext, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import {
-    Container,
-    FormLine
+    FormLine,
+    BalanceContainer,
+    TransactionSection,
+    TransactionFilter,
+    TransactionTable,
+    LogoutButton,
+    Username
 } from "./homestyle";
 import ToastAnimated, { showToast } from "../../Components/Toast/Toast";
 import useProtectedPage from "../../hooks/use-protected-page";
+import { useNavigate } from 'react-router-dom'; // Importe o useNavigate
+import { getRegisteredUsername } from '../../util/userUtil';
 
 const HomePage = () => {
-    const history = useHistory();
-    useProtectedPage(history);
+    const navigate = useNavigate(); // Use o useNavigate
+    useProtectedPage();
 
-    const [isLoading, setIsLoading] = useState(false);
     const [balance, setBalance] = useState(1000); // Saldo inicial simulado
     const [transactionData, setTransactionData] = useState([]); // Estado para as transações
     const [filteredTransactions, setFilteredTransactions] = useState([]); // Estado para transações filtradas
     const [startDate, setStartDate] = useState(""); // Estado para a data de início do filtro
     const [endDate, setEndDate] = useState(""); // Estado para a data final do filtro
     const [transactionType, setTransactionType] = useState("all"); // Estado para o tipo de transação
+
+    const username = getRegisteredUsername();
 
     useEffect(() => {
         loadTransactions(); // Carrega as transações do usuário
@@ -38,7 +45,8 @@ const HomePage = () => {
 
     const handleLogout = () => {
         // Implemente sua função de logout (substitua por lógica real)
-        history.push("/login");
+        // Navegue para a página de login após o logout
+        navigate("/");
     };
 
     const handleFilter = () => {
@@ -65,11 +73,15 @@ const HomePage = () => {
     };
 
     return (
-        <Container>
+        <>
             <FormLine />
 
+                <Username>
+                    <p>Olá, {username}</p>
+                </Username>
+
                 <BalanceContainer>
-                    <p>Saldo da conta: R$ {balance}</p> {/* Exibe o saldo simulado */}
+                    <p>Conta <br/>R$ {balance}</p> {/* Exibe o saldo simulado */}
                 </BalanceContainer>
 
                 <TransactionSection>
@@ -130,7 +142,7 @@ const HomePage = () => {
                 </TransactionTable>
                 <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
             <FormLine />
-        </Container>
+        </>
     );
 };
 
