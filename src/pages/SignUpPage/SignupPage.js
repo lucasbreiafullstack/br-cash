@@ -16,6 +16,7 @@ import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import ToastAnimated, { showToast } from "../../Components/Toast/Toast";
 import { Loading } from "../../Components/Loading/Loading";
+import { setRegisteredNickname } from "../../util/userUtil";
 
 const SignUpPage = () => {
     const navigate = useNavigate();
@@ -42,10 +43,11 @@ const SignUpPage = () => {
     // Função de simulação de cadastro de usuário
     const simulateSignUp = () => {
         // Simule um objeto de resposta com um username
-        const simulatedResponse = { username: form.username };
-            
+        const simulatedResponse = { nickname: form.nickname };
+
         // Armazene o username no localStorage
-        localStorage.setItem('username', simulatedResponse.username);
+        localStorage.setItem('nickname', simulatedResponse.nickname);
+        setRegisteredNickname(simulatedResponse.nickname);
 
         // Navegar para a página inicial após o cadastro
         goToHomePage(navigate);
@@ -61,6 +63,7 @@ const SignUpPage = () => {
         try {
             // Simulação de cadastro bem-sucedido
             simulateSignUp();
+            console.log(simulateSignUp)
         } catch (error) {
             setIsLoading(false);
             console.error(error);

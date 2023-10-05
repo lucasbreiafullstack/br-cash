@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { goToHomePage, goToSignupPage } from "../../Router/coordinator";
 import { 
     FormLogin, 
@@ -47,11 +46,6 @@ const LoginPage = () => {
         setIsLoading(true);
 
         try {
-            const body = {
-                username: form.username,
-                password: form.password
-            };
-
             // Simulação de autenticação bem-sucedida
             const simulatedResponse = { data: { token: 'admin-on' } };
             localStorage.setItem("token", simulatedResponse.data.token);

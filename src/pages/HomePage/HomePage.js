@@ -1,30 +1,32 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
     FormLine,
     BalanceContainer,
+    ContainerTransaction,
     TransactionSection,
     TransactionFilter,
     TransactionTable,
     LogoutButton,
     Username
 } from "./homestyle";
-import ToastAnimated, { showToast } from "../../Components/Toast/Toast";
 import useProtectedPage from "../../hooks/use-protected-page";
 import { useNavigate } from 'react-router-dom'; // Importe o useNavigate
-import { getRegisteredUsername } from '../../util/userUtil';
+import { getRegisteredNickname } from '../../util/userUtil';
+import { MdKeyboardArrowRight, MdOutlinePix } from 'react-icons/md'
 
 const HomePage = () => {
     const navigate = useNavigate(); // Use o useNavigate
     useProtectedPage();
 
-    const [balance, setBalance] = useState(1000); // Saldo inicial simulado
+    const [balance, setBalance] = useState(10000); // Saldo inicial simulado
     const [transactionData, setTransactionData] = useState([]); // Estado para as transações
     const [filteredTransactions, setFilteredTransactions] = useState([]); // Estado para transações filtradas
     const [startDate, setStartDate] = useState(""); // Estado para a data de início do filtro
     const [endDate, setEndDate] = useState(""); // Estado para a data final do filtro
     const [transactionType, setTransactionType] = useState("all"); // Estado para o tipo de transação
 
-    const username = getRegisteredUsername();
+    const nickname = getRegisteredNickname();
+    console.log(nickname)
 
     useEffect(() => {
         loadTransactions(); // Carrega as transações do usuário
@@ -77,18 +79,25 @@ const HomePage = () => {
             <FormLine />
 
                 <Username>
-                    <p>Olá, {username}</p>
+                    <p>Olá, {nickname}</p>
                 </Username>
 
                 <BalanceContainer>
-                    <p>Conta <br/>R$ {balance}</p> {/* Exibe o saldo simulado */}
+                    <a href=""><p>Conta <br/>R$ {balance}</p> {/* Exibe o saldo simulado */}</a>
+                    <a href=""><MdKeyboardArrowRight/></a>
                 </BalanceContainer>
 
-                <TransactionSection>
-                    <h2>Realizar Transferência</h2>
-                    {/* Adicione os campos e botões para realizar transferências aqui */}
-                </TransactionSection>
+                <ContainerTransaction>
+                    <TransactionSection>
+                        <a href=""><MdOutlinePix/></a>
+                        <p>Área pix</p>
+                    </TransactionSection>
 
+                    <TransactionSection>
+                        <a href=""><MdOutlinePix/></a>
+                        <p>Área pix</p>
+                    </TransactionSection>
+                </ContainerTransaction>
                 <TransactionFilter>
                     <label htmlFor="startDate">Data Inicial:</label>
                     <input
